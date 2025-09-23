@@ -125,7 +125,7 @@
         <?php
         // Display list of users (Part II of assignment)
         try {
-            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+            $pdo = new PDO("sqlite:$database_file");
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             $stmt = $pdo->prepare("SELECT name, email, created_at FROM users ORDER BY created_at ASC");
@@ -140,7 +140,7 @@
                             <li>
                                 <strong><?php echo htmlspecialchars($user['name']); ?></strong> - 
                                 <?php echo htmlspecialchars($user['email']); ?>
-                                <small>(Registered: <?php echo date('Y-m-d H:i', strtotime($user['created_at'])); ?>)</small>
+                                <small>(Registered: <?php echo $user['created_at']; ?>)</small>
                             </li>
                         <?php endforeach; ?>
                     </ol>

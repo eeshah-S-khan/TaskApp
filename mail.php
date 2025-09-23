@@ -11,7 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 $host = 'localhost';
 $dbname = 'taskapp_db';
 $username = 'root';
-$password = '123456'; 
+$password = '123456'; // Use the password you set for MariaDB
 
 // Function to validate email address
 function validateEmail($email) {
@@ -28,7 +28,7 @@ function sendWelcomeEmail($userEmail, $userName) {
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'eeshahsabirkhan144@gmail.com';  
-        $mail->Password   = 'abcd efgh ijkl mnop';     
+        $mail->Password   = 'abcdefghijklmnop';     
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -74,13 +74,21 @@ if ($_POST) {
     if (!validateEmail($email)) {
         $error = "Invalid email address format.";
     } else {
-        // Connect to database
+        // Connect to SQLite database
         try {
-            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+            $pdo = new PDO("sqlite:$database_file");
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
+            // Create table if it doesn't exist
+            $pdo->exec("CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT UNIQUE NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )");
+            
             // Insert user into database
-            $stmt = $pdo->prepare("INSERT INTO users (name, email, created_at) VALUES (?, ?, NOW())");
+            $stmt = $pdo->prepare("INSERT INTO users (name, email, created_at) VALUES (?, ?, datetime('now'))");
             $stmt->execute([$name, $email]);
             
             // Send welcome email
