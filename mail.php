@@ -33,7 +33,7 @@ function sendWelcomeEmail($userEmail, $userName) {
         $mail->Port       = 587;
 
         // Recipients
-        $mail->setFrom('your_email@gmail.com', 'ICS 2.2 System Admin');
+        $mail->setFrom('eeshahsabirkhan144@gmail.com', 'ICS 2.2 System Admin');
         $mail->addAddress($userEmail, $userName);
 
         // Content
