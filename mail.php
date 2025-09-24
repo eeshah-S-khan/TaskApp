@@ -28,7 +28,7 @@ function sendWelcomeEmail($userEmail, $userName) {
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'eeshahsabirkhan144@gmail.com';  
-        $mail->Password   = 'abcdefghijklmnop';     
+        $mail->Password   = 'xhkfk4jrnffjijfn';     
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
